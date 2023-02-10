@@ -1,62 +1,99 @@
-const normalize = prompt("Choose: Rock, Paper, or Scissors")
-const playerSelection = normalize.toLowerCase();
-// console.log(normalize);
-const computerSelection = getComputerChoice();
+let tieGame;
+let notValid;
+let computerWin;
+let playerWin;
+let tie;
+let pScore = 0;
+let cScore = 0;
 
-function getComputerChoice() {
-    // randomly returns Rock, Paper, or Scissors (the random function and can initialize 3 variables to spit out a random number that correlates to a choice
-    selection = Math.floor(Math.random() * 3) + 1;
-        if (selection === 1) {
-            selection = "rock";
-        } else if (selection === 2) {
-            selection = "paper";
-        } else {
-            selection = "scissors";
-        }
-    // console.log(selection);
-    return selection;
-}
-
-function playRound(playerSelection, computerSelection) {
-    let playerWin = "Nice! ";
-    let computerWin = "Sorry! ";
-    let tieGame = "You both tied! Try again.";
-
-    if (playerSelection === computerSelection) {
-        return tieGame;
+function compRandom() {
+pickRandom = Math.floor(Math.random() * 4) + 1;
+    if (pickRandom === 1) {
+        return "rock";
     }
-    else if (playerSelection === "rock" && computerSelection === "paper") {
-        return computerWin += "Paper beats rock, you lose.";
-    }
-    else if (playerSelection === "rock" && computerSelection === "scissors") {
-        return playerWin += "Rock beats scissors, you win.";
-    }
-    else if (playerSelection === "paper" && computerSelection === "rock") {
-        return playerWin += "Paper beats rock, you win.";
-    }
-    else if (playerSelection === "paper" && computerSelection === "scissors") {
-        return computerWin += "Scissors beats paper, you lose.";
-    }
-    else if (playerSelection === "scissors" && computerSelection === "rock") {
-        return computerWin += "Rock beats scissors, you lose.";
-    }
-    else if (playerSelection === "scissors" && computerSelection === "paper") {
-        return playerWin += "Scissors beat paper, you win.";
+    else if (pickRandom === 2) {
+        return "paper";
     }
     else {
-        return "please enter a valid choice"
+        return "scissors";
+    }
+}
+
+function playRound() {
+    text = prompt("Please select: Rock, Paper, Scissors");
+    playerChoice = text.toLowerCase();
+    computerChoice = compRandom();
+
+    let playerWin = playerChoice + " beats " + computerChoice + ", Player wins this round!";
+    let computerWin = computerChoice + " beats " + playerChoice + ", Computer wins this round!";
+    let tieGame = "It's a tie, next round";
+    let notValid = "Please enter a valid choice: Rock, Paper, Scissors";
+    let results;
+
+    if (playerChoice === computerChoice) {
+        results = tieGame;
+        return results;
+    }
+    else if (computerChoice === "paper" && playerChoice === "rock") {
+        results = computerWin
+        cScore++;
+        return results;
+    }
+    else if (computerChoice === "scissors" && playerChoice === "paper") {
+        results = computerWin
+        cScore++;
+        return results;
+    }
+    else if (computerChoice === "rock" && playerChoice === "scissors") {
+        results = computerWin
+        cScore++;
+        return results;
+    }
+    else if (playerChoice === "scissors" && computerChoice === "paper") {
+        results = playerWin;
+        pScore++;
+        return results;
+    }
+    else if (playerChoice === "rock" && computerChoice === "scissors") {
+        results = playerWin;
+        pScore++;
+        return results;
+    }
+    else if (playerChoice === "paper" && computerChoice === "rock") {
+        results = playerWin;
+        pScore++;
+        return results;
+    }
+    else {
+        results = notValid;
+        return results;
     } 
 }
 
-// console.log(playRound(playerSelection, computerSelection));
+function playGame() {
+    let cWin = 'Sorry! The Computer wins this best of 5';
+    let pWin = 'Congrats! You win this best of 5';
+    let tWin = "Oh wow! It's tie game in this best of 5";
+    let gameOver = "That concludes this series. See you next time!";
+    let results = "Player score: " + pScore + " | Computer score: " + cScore;
 
-//   function game() {
-    // call playRound function within this function
-    // function plays 5 games
 
-    // function keeps score
-    // function reports the winner or loser at the end
-    // use console.log to display results in console 
-// }
-
-    // game();
+    for(i=1; i<6; i++) {
+        alert("Round: " + i);
+        playRound();
+    }
+    if (pScore === cScore) {
+        alert(results);
+        alert(tWin);
+    }
+    else if (pScore < cScore) {
+        alert(results);
+        alert(cWin);
+    }
+    else if ( pScore > cScore) {
+        alert(results);
+        alert(pWin);
+    }
+    alert(gameOver);
+}
+playGame();
